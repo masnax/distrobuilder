@@ -152,6 +152,11 @@ func (r *RepackUtil) InjectDrivers(windowsRootPath string, driverPath string) er
 			}
 		}
 
+		if infFilename == "" {
+			logger.Warn("Skipping driver not supported by Windows version", logrus.Fields{"driver": driverName, "version": r.windowsVersion})
+			continue
+		}
+
 		classGuid, err := ParseDriverClassGuid(driverName, filepath.Join(dirs["inf"], infFilename))
 		if err != nil {
 			return err
